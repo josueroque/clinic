@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel='stylesheet' href='/stylesheets/style.css' />
+
+</head>
+<body>
+  <h1>Welcome to Gynecolist System</h1>
+  <h2> Use the left menu to navigate</h3>
+    <button class="accordion">Pacient</button>
+    <div class="panel">
+      <p><a href="historial" style="text-decoration:none ">Save History</a></p>
+      <p><a href="pacientList" style="text-decoration:none ">Pacients List</a></p>
+    </div>
+    <button class="accordion">Section 2</button>
+    <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div>
+    
+    <button class="accordion">Section 3</button>
+    <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div> 
+
+    <script>
+
+      //grid
+      
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+              panel.style.maxHeight = null;
+            } else {
+              panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+          });
+        }
+        </script>
+</body>
+
