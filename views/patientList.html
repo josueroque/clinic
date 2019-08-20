@@ -12,6 +12,10 @@
    
     <h1>Clinical History</h1>
     <h2>General Information</h2>
+    <form method="POST" action="/patientList">
+      <input type="text"  id="selectedRows" name="patient"  style="margin-left:45vw ; text-align:center" ></input>
+      <input type="submit" value="Editar" title="Editar"  style="margin-left:45vw ; text-align:center" >
+    </form>
     <div class="wrapper"> 
     <div class="accordion">
         <button class="accordion">Pacient</button>
@@ -31,11 +35,12 @@
           <p>Lorem ipsum...</p>
         </div> 
     </div>
+
     <div id="myGrid" style="height: 600px;width:500px;" class="ag-theme-balham"></div>       
     </div>
     
     <script type="text/javascript" charset="utf-8">
-
+ let dataPatient={};
   // specify the columns
   var columnDefs = [
       {headerName: "Firt Name", field: "name"},
@@ -52,8 +57,35 @@
 
     // let the grid know which columns to use
     var gridOptions = {
-      columnDefs: columnDefs
+    columnDefs: columnDefs,
+    rowSelection: 'single',
+    onSelectionChanged: onSelectionChanged
     };
+
+    function onSelectionChanged() {
+    var selectedRows = gridOptions.api.getSelectedRows();
+    var selectedRowsString = '';
+    selectedRows.forEach( function(selectedRow, index) {
+        if (index!==0) {
+            selectedRowsString += ', ';
+        }
+        selectedRowsString += selectedRow.idNumber
+    });
+
+
+    //Store patient in a variable
+   
+    let ruta='http://localhost:3000/patient?id='+selectedRowsString;
+    fetch(ruta).then(function(response) {
+    return response.json();
+  }).then(function(data) {
+    dataPatient=data[0];
+
+  });  
+  console.log(dataPatient);
+   document.querySelector('#selectedRows').value =JSON.stringify( dataPatient);
+ 
+ }
 
   // lookup the container we want the Grid to use
   var eGridDiv = document.querySelector('#myGrid');
@@ -64,6 +96,7 @@
   fetch('http://localhost:3000/patients').then(function(response) {
     return response.json();
   }).then(function(data) {
+   
     gridOptions.api.setRowData(data);
   })   
 

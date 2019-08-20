@@ -8,7 +8,11 @@ var logger = require('morgan');
 // var usersRouter = require('./routes/users');
 // var historialRouter = require('./routes/historial');
 
+const session = require('express-session');
+
 var app = express();
+
+app.use(session({secret: 'test'}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./lib/connection');
-require('./models/Pacient');
+require('./models/Patient');
 
 
 app.use('/',        require('./routes/index'));

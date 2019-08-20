@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 // definimos un esquema
-const pacientSchema = mongoose.Schema({
+const patientSchema = mongoose.Schema({
   idNumber:String,
   name: String,
   lastName: String,
@@ -27,8 +27,20 @@ const pacientSchema = mongoose.Schema({
 
 // en los metodos de modelos de mongoose no usar arrow functions (perdemos el this a la instancia)
 
-pacientSchema.statics.list = function() {
-  const query = Pacient.find({});
+patientSchema.statics.list = function({filter}) {
+  const query = Patient.find(filter);
+  // console.log(filter);
+  // query.skip(skip);
+  // query.limit(limit);
+  // query.select(fields);   
+  // query.sort(sort);
+ // query.start(start);
+
+  return query.exec();
+}
+
+patientSchema.statics.listAll = function() {
+  const query = Patient.find();
   // console.log(filter);
   // query.skip(skip);
   // query.limit(limit);
@@ -38,8 +50,8 @@ pacientSchema.statics.list = function() {
   return query.exec();
 }
 
-pacientSchema.statics.listTags = function() {
-  const query = Pacient.distinct("tags") ;
+patientSchema.statics.listTags = function() {
+  const query = Patient.distinct("tags") ;
  // console.log(filter);
 
  // query.start(start);
@@ -47,6 +59,6 @@ pacientSchema.statics.listTags = function() {
 }
 
 // creamos el modelo de agente
-const Pacient = mongoose.model('Pacient', pacientSchema);
+const Patient = mongoose.model('Patient', patientSchema);
 
-module.exports = Pacient;
+module.exports = Patient;
