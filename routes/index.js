@@ -41,10 +41,11 @@ router.get('/patientList',async function(req, res, next) {
 });
 /* GET home page. */
 router.get('/historial',  function(req, res, next) {
+res.locals.data={};
 
+console.log(res.locals.data + 'desde historial' );
 
-//console.log('paciente: '+sess.patient1);
-  res.render('historial', { title: 'Express' });
+res.render('historial', { title: 'Express' });
 });
 
 router.post('/patientList',  (req, res, next) => {
@@ -52,9 +53,9 @@ router.post('/patientList',  (req, res, next) => {
     const data = req.body;
      sess=req.session;
      sess.patient1=data;
-     
-    console.log(sess.patient1);
-    res.redirect('/historial');
+     res.locals.data={};
+   // console.log(sess.patient1);
+    res.render('/historial');
     
   } catch (err) {
     next(err);
@@ -64,15 +65,32 @@ router.post('/patientList',  (req, res, next) => {
 router.post('/historial', async (req, res, next) => {
   try {
     const data = req.body;
-    data['socialInsurance']=true;
-    data['knowWriteRead']=true;
-    data['livesAlone']=true;
+    // data['socialInsurance']=true;
+    // data['knowWriteRead']=true;
+    // data['livesAlone']=true;
     console.log(data);
     const patient = new Patient(data);
-   // console.log(req.body);
+    console.log(patient);
     const savedPatient = await patient.save();
    // res.json({ success: true, result: savedPatient });
+   res.locals.data={};
     res.render('historial', {title: savedPatient });
+    
+  } catch (err) {
+    next(err);
+  };
+
+});
+
+router.post('/historial2', async (req, res, next) => {
+  try {
+     res.locals.data = JSON.parse(req.body['patient']);
+     res.locals.data['birthday'].toString;
+     res.locals.data['birthday']= res.locals.data['birthday'].substring(0, 10);
+    console.log('prueba '+ res.locals.data['birthday']);
+    let dt= new Date(res.locals.data['birthday']);
+    console.log(dt)
+;    res.render('historial' );
     
   } catch (err) {
     next(err);

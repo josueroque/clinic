@@ -15,7 +15,7 @@
         <button class="accordion">Pacient</button>
         <div class="panel">
           <p><a href="historial" style="text-decoration:none ">Save History</a></p>
-          <p><a href="pacientList" style="text-decoration:none ">Pacients List</a></p>
+          <p><a href="patientList" style="text-decoration:none ">Pacients List</a></p>
         </div>
         <button class="accordion">Section 2</button>
         <div class="panel">
@@ -30,43 +30,53 @@
         <form method="POST" action="/historial">
           <div class="form">
             <label for="idNumber">Id Number</label>
-            <input type="text" name="idNumber"  required class="text">
+            <input type="text" name="idNumber"  required class="text"value="<%= data.idNumber%>">
           </div>
           <div class="form">
             <label for="name">Name</label>
-            <input type="text" name="name" required class="text"></div>
+            <input type="text" name="name" required class="text" value="<%= data.name%>" ></div>
           <div class="form">
             <label for="lastName">Last Name</label>
-            <input type="text" name="lastName" required class="text">
+            <input type="text" name="lastName" required class="text" value="<%= data.lastName%>">
           </div>
           <div class="radio">
+         
             <label for="socialInsurance" >Does the pacient have social insurance?</label>
+                     
           <p>
-          <input type="radio" name="socialInsurance" checked class="yes" value=true >Yes</input>
+            <% if(data.socialInsurance===true) { %>
+              <input type="radio" name="socialInsurance" checked=true class="yes" value=true >Yes</input>
+            <% } else { %> 
+              <input type="radio" name="socialInsurance"  class="yes" value=true >Yes</input>
+            <% }  %> 
           </p>
           <p>
-          <input type="radio" name="socialInsurance" value=false>No</input>
+            <% if(data.socialInsurance===true) { %>
+              <input type="radio" name="socialInsurance"  class="no" value=false >No</input>
+            <% } else { %> 
+              <input type="radio" name="socialInsurance" checked class="no" value=false >No</input>
+            <% }  %> 
           </p>
           </div>
           <div class="form">
             <label for="address" style="position: absolute; display: inline-block;margin-top:2%;">Address</label>
-            <textarea style="margin-left:100%;width:20vw"  name="address"  required class="text"></textarea>
+            <textarea style="margin-left:100%;width:20vw"  name="address"  required class="text"><%= data.address %></textarea>
           </div>
           <div class="form">
             <label for="city">City</label>
-            <input type="text" name="city" required class="text">
+            <input type="text" name="city" required class="text" value="<%=data.city %>">
           </div>
           <div class="form">
             <label for="phone">Phone</label>
-            <input type="text" name="phone" required class="text">
+            <input type="text" name="phone" required class="text" value="<%=data.phone %>"">
           </div>
           <div class="form">
             <label for="birthday">Birthday</label>
-            <input type="date" name="birthday" required class="text">
+            <input type="date" name="birthday" required class="text" value=data.birthday>
           </div>
           <div class="form">
             <label for="race">Ethnic Group</label>
-            <select name="race" class="list">
+            <select name="race" class="list" value="<%=data.race %>">
               <option value="white">White</option>
               <option value="hispanic">Hispanic</option>
               <option value="black">Black</option>

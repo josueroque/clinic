@@ -12,7 +12,7 @@
    
     <h1>Clinical History</h1>
     <h2>General Information</h2>
-    <form method="POST" action="/patientList">
+    <form method="POST" action="/historial2">
       <input type="text"  id="selectedRows" name="patient"  style="margin-left:45vw ; text-align:center" ></input>
       <input type="submit" value="Editar" title="Editar"  style="margin-left:45vw ; text-align:center" >
     </form>
@@ -40,7 +40,7 @@
     </div>
     
     <script type="text/javascript" charset="utf-8">
- let dataPatient={};
+//  let dataPatient=new Object;
   // specify the columns
   var columnDefs = [
       {headerName: "Firt Name", field: "name"},
@@ -66,7 +66,8 @@
     var selectedRows = gridOptions.api.getSelectedRows();
     var selectedRowsString = '';
     selectedRows.forEach( function(selectedRow, index) {
-        if (index!==0) {
+     // console.log(index+' ' +selectedRow); 
+      if (index!==0) {
             selectedRowsString += ', ';
         }
         selectedRowsString += selectedRow.idNumber
@@ -74,16 +75,17 @@
 
 
     //Store patient in a variable
-   
+   console.log('id: '+selectedRowsString);
     let ruta='http://localhost:3000/patient?id='+selectedRowsString;
     fetch(ruta).then(function(response) {
     return response.json();
   }).then(function(data) {
-    dataPatient=data[0];
-
+    // console.log(data[0]);
+    // dataPatient=data[0];
+    document.querySelector('#selectedRows').value = JSON.stringify(data[0]);
   });  
-  console.log(dataPatient);
-   document.querySelector('#selectedRows').value =JSON.stringify( dataPatient);
+  //console.log(dataPatient);
+  
  
  }
 
