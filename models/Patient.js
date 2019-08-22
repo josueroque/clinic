@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // definimos un esquema
 const patientSchema = mongoose.Schema({
-  idNumber:String,
+  idNumber:{ type: String, required: true, unique: true },
   name: String,
   lastName: String,
   socialInsurance:Boolean,

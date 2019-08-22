@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 const Patient = require('../models/Patient');
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -62,18 +63,30 @@ router.post('/patientList',  (req, res, next) => {
   };
 });
 
+router.post('/modificar', async (req, res, next) => {
+  try {   
+      const data = req.body;
+      const id = data['idNumber'];   
+      const savedPatient = await Patient.findOneAndUpdate({idNumber:id}, data, { new: true }).exec(); 
+            // new: true --> hace que retorne la versión del agente guardada en la base de datos   
+            
+          res.render('historial', {title: savedPatient }); 
+          } 
+          catch (err) {   
+            next(err); 
+           } 
+        });
+
 router.post('/historial', async (req, res, next) => {
   try {
     const data = req.body;
-    // data['socialInsurance']=true;
-    // data['knowWriteRead']=true;
-    // data['livesAlone']=true;
-    console.log(data);
+
+
     const patient = new Patient(data);
-    console.log(patient);
+
     const savedPatient = await patient.save();
-   // res.json({ success: true, result: savedPatient });
-   res.locals.data={};
+
+    res.locals.data={};
     res.render('historial', {title: savedPatient });
     
   } catch (err) {
@@ -87,10 +100,12 @@ router.post('/historial2', async (req, res, next) => {
      res.locals.data = JSON.parse(req.body['patient']);
      res.locals.data['birthday'].toString;
      res.locals.data['birthday']= res.locals.data['birthday'].substring(0, 10);
-    console.log('prueba '+ res.locals.data['birthday']);
-    let dt= new Date(res.locals.data['birthday']);
-    console.log(dt)
-;    res.render('historial' );
+
+    let dt= new Date;
+    dt= moment(res.locals.data['birthday']).format('YYYY-MM-DD')
+    res.locals.data['birthday']=dt;
+
+    res.render('historial' );
     
   } catch (err) {
     next(err);
