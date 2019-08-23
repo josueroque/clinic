@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
   <body>
    
     <h1>Clinical History</h1>
-    <h2>General Information</h2>
+    <!-- <h2>General Information</h2> -->
     <div class="wrapper"> 
     <div class="accordion">
         <button class="accordion">Pacient</button>
@@ -177,7 +178,7 @@
      
       //console.log('id '+txt);
      if (document.getElementById("id").value!==""){ 
-      let ruta='http://localhost:3000/patient?id='+txt;
+      let ruta='http://localhost:3000/patient?id='+txt;0
       fetch(ruta).then(function(response) {
        return response.json();
       }).then(function(data) {

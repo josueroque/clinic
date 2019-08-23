@@ -1,14 +1,29 @@
+'use strict'
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 const Patient = require('../models/Patient');
+
+// //session
+ const session = require('express-session');
+// const app = express();
+ const bodyParser = require('body-parser');
+// app.use(session({secret: 'test',saveUninitialized: true,resave: true}));
+// app.use(bodyParser.json());      
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.static(__dirname + '/views'));
+ var sess; // global session, NOT recommended
+// //session
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
+ // sess=req.session;
   res.render('index', { title: 'Express' });
 });
 
 router.get('/patients', async (req, res, next) => {
   try {
+ // sess=req.session;
   const patients = await Patient.listAll();
  // res.json({ success: true, results:patients });
  res.json(patients);
@@ -20,8 +35,11 @@ router.get('/patients', async (req, res, next) => {
 
 router.get('/patient', async (req, res, next) => {
   try {
+     sess=req.session;
+     sess.idNumber=req.query.id;
+     console.log(sess.idNumber);
     const id=req.query.id;
-  let filter = {};
+    let filter = {};
 
   if(id){
     filter.idNumber=id;
@@ -37,6 +55,7 @@ router.get('/patient', async (req, res, next) => {
 });
 
 router.get('/patientList',async function(req, res, next) {
+  //sess=req.session;
   //console.log('paciente: '+sess.patient1);
   res.render('patientList', { title: 'Express' });
 });
@@ -52,8 +71,8 @@ res.render('historial', { title: 'Express' });
 router.post('/patientList',  (req, res, next) => {
   try {
     const data = req.body;
-     sess=req.session;
-     sess.patient1=data;
+    //  sess=req.session;
+    //  sess.patient1=data;
      res.locals.data={};
    // console.log(sess.patient1);
     res.render('/historial');
@@ -65,12 +84,14 @@ router.post('/patientList',  (req, res, next) => {
 
 router.post('/modificar', async (req, res, next) => {
   try {   
+     // sess=req.session;
       const data = req.body;
       const id = data['idNumber'];   
       const savedPatient = await Patient.findOneAndUpdate({idNumber:id}, data, { new: true }).exec(); 
             // new: true --> hace que retorne la versión del agente guardada en la base de datos   
-            
-          res.render('historial', {title: savedPatient }); 
+            res.locals.data={}; 
+                 
+            res.render('historial', {title: savedPatient }); 
           } 
           catch (err) {   
             next(err); 
@@ -80,7 +101,6 @@ router.post('/modificar', async (req, res, next) => {
 router.post('/historial', async (req, res, next) => {
   try {
     const data = req.body;
-
 
     const patient = new Patient(data);
 
@@ -97,6 +117,8 @@ router.post('/historial', async (req, res, next) => {
 
 router.post('/historial2', async (req, res, next) => {
   try {
+    sess=req.session;
+    console.log(sess.idNumber);
      res.locals.data = JSON.parse(req.body['patient']);
      res.locals.data['birthday'].toString;
      res.locals.data['birthday']= res.locals.data['birthday'].substring(0, 10);

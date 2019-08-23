@@ -12,7 +12,7 @@ const session = require('express-session');
 
 var app = express();
 
-app.use(session({secret: 'test'}));
+app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
