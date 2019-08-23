@@ -105,3 +105,8 @@ margin: 0.5%;
   background-color: #3e8e41;
   color: white;
 }
+
+textarea{
+  margin-left:22vw;
+  width:20vw;
+}

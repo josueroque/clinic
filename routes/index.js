@@ -12,12 +12,15 @@ const Patient = require('../models/Patient');
 // app.use(bodyParser.json());      
 // app.use(bodyParser.urlencoded({extended: true}));
 // app.use(express.static(__dirname + '/views'));
- var sess; // global session, NOT recommended
+// var sess; // global session, NOT recommended
 // //session
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
  // sess=req.session;
+ //if (req.session.idNumber){
+   console.log('from home '+req.session.idNumber);
+ //}
   res.render('index', { title: 'Express' });
 });
 
@@ -35,9 +38,9 @@ router.get('/patients', async (req, res, next) => {
 
 router.get('/patient', async (req, res, next) => {
   try {
-     sess=req.session;
+    let sess=req.session;
      sess.idNumber=req.query.id;
-     console.log(sess.idNumber);
+     console.log('pat'+sess.idNumber);
     const id=req.query.id;
     let filter = {};
 
@@ -117,8 +120,9 @@ router.post('/historial', async (req, res, next) => {
 
 router.post('/historial2', async (req, res, next) => {
   try {
-    sess=req.session;
-    console.log(sess.idNumber);
+   // sess=req.session;
+   // console.log('hist2'+ sess.idNumber);
+   console.log('hist '+req.session.idNumber);
      res.locals.data = JSON.parse(req.body['patient']);
      res.locals.data['birthday'].toString;
      res.locals.data['birthday']= res.locals.data['birthday'].substring(0, 10);
