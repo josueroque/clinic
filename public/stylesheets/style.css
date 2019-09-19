@@ -107,6 +107,8 @@ margin: 0.5%;
 }
 
 textarea{
-  margin-left:22vw;
-  width:20vw;
+  position:absolute;
+  margin-left:40vw;
+  width:16.5vw;
+  height:4vw;
 }

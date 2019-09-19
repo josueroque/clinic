@@ -71,6 +71,14 @@ console.log(res.locals.data + 'desde historial' );
 res.render('historial', { title: 'Express' });
 });
 
+router.get('/historial2',  function(req, res, next) {
+  res.locals.data={};
+  
+  console.log(res.locals.data + 'desde historial' );
+  
+  res.render('historial', { title: 'Express' });
+  });
+
 router.post('/patientList',  (req, res, next) => {
   try {
     const data = req.body;
