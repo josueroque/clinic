@@ -12,8 +12,12 @@ const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 const client  = redis.createClient();
+var cors = require('cors');
+require('dotenv').config();
 var app = express();
 
+app.use(cors()); 
+app.options('*', cors()) ;
 //app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
 app.use(session({
   secret: 'ssshhhhh',
@@ -36,12 +40,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./lib/connection');
 require('./models/Patient');
 
-
 app.use('/',        require('./routes/index'));
-app.use('/users',   require('./routes/users'));
+//app.use('/users',   require('./routes/users'));
 //app.use('/historial',        require('./routes/historial'));
 
+//Api routes
+app.use('/apiv1/patients', require('./routes/apiv1/patients'));
+app.use('/apiv1/history', require('./routes/apiv1/history'));
 
+//Middlewares
+if (process.env.LOG_FORMAT !== 'nolog') {
+  app.use(logger(process.env.LOG_FORMAT || 'dev'));
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
