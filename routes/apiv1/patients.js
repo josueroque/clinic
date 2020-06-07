@@ -4,6 +4,21 @@ const express = require('express');
 const router = express.Router();
 const Patient = require('../../models/Patient');
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    let data = req.body;
+    console.log(data);
+    data.updatedAt=Date.now();
+    const _id=req.params.id;
+    const patientUpdated = await Patient.findOneAndUpdate ({_id: _id}, data, { new: true }).exec();
+    res.json({ success: true, result: patientUpdated});
+
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
 router.post('/', async (req, res, next) => {
   try {
     let data = req.body;
@@ -21,19 +36,19 @@ router.post('/', async (req, res, next) => {
 });
 
 router.delete('/:id', async (req, res, next) => {
-  try {
+  // try {
 
-    const _id = req.params.id;
-   //await advert.setPhoto(req.files) ;
-    await Advert.deleteOne({ _id: _id}).exec();
-    await User.updateMany( {}, { $pullAll: {favorites: [_id] } });
+  //   const _id = req.params.id;
+  //  //await advert.setPhoto(req.files) ;
+  //   await Advert.deleteOne({ _id: _id}).exec();
+  //   await User.updateMany( {}, { $pullAll: {favorites: [_id] } });
 
-    res.json({ success: true, result: 'item deleted!' });
+  //   res.json({ success: true, result: 'item deleted!' });
 
-  } catch (err) {
-    console.log(err); 
-    next(err);
-  }
+  // } catch (err) {
+  //   console.log(err); 
+  //   next(err);
+  // }
 });
 
 
@@ -44,13 +59,14 @@ router.get('/',async (req, res, next) => {
 
    
     const active=req.query.active;
+    const id=req.query._id;
     const name= req.query.name;
     const lastName=req.query.lastName;
     const idNumber= req.query.idNumber;
     const limit = parseInt(req.query.limit);
     const fields = req.query.fields;
     let sort = req.query.sort;
-    const id=req.query.id;
+
     const start =req.query.start
         
     let skip;
@@ -115,11 +131,11 @@ router.get('/',async (req, res, next) => {
   
     }
 
-   // console.log (filter);
+    //console.log (id);
 
    //let sort={sort:'createdAt:-1'};
     const patients = await Patient.list({ filter: filter, skip, limit, fields, sort});
-
+   // console.log(patients);
 
    res.json({ success: true, results: patients });
 
