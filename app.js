@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./lib/connection');
 require('./models/Patient');
 
-app.use('/',        require('./routes/index'));
+//app.use('/',        require('./routes/index'));
 //app.use('/users',   require('./routes/users'));
 //app.use('/historial',        require('./routes/historial'));
 
