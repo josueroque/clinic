@@ -4,34 +4,35 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../../models/User');
-const uuidv1 = require('uuid/v1');
+//const uuidv1 = require('uuid/v1');
+const uuidv1 = require('uuid');
 const bcrypt = require('bcrypt');
-const ResetRequest = require('../../models/ResetRequests');
+//const ResetRequest = require('../../models/ResetRequests');
 
-router.put('/reset', async(req, res,next) => {
-try {
+// router.put('/reset', async(req, res,next) => {
+// try {
   
-  const thisRequest = await ResetRequest.findOne({id:req.body.id});
-  console.log('request');
-  console.log(req.body.password);
-  if (thisRequest) {
-      const user = await User.findOne({email:thisRequest.email});
-//      const hashed= await bcrypt.hash(req.body.password, 10);
-      const hashed=User.hashPassword(req.body.password);
-      console.log('user');
-      console.log(user._id);          
-      user.password = hashed;
-      
-      await User.findOneAndUpdate({_id: user._id} ,{password:hashed},{ new: true }).exec();
-      res.status(204).json('password changed!');
+//   const thisRequest = await ResetRequest.findOne({id:req.body.id});
+//   console.log('request');
+//   console.log(req.body.password);
+//   if (thisRequest) {
+//       const user = await User.findOne({email:thisRequest.email});
+// //      const hashed= await bcrypt.hash(req.body.password, 10);
+//       const hashed=User.hashPassword(req.body.password);
+//       console.log('user');
+//       console.log(user._id);          
+//       user.password = hashed;
+        
+//       await User.findOneAndUpdate({_id: user._id} ,{password:hashed},{ new: true }).exec();
+//       res.status(204).json('password changed!');
 
-   } else {
-       res.status(404).json('Request not found');
- }
-} catch (error) {
-  next(error);
-}}
-);
+//    } else {
+//        res.status(404).json('Request not found');
+//  }
+// } catch (error) {
+//   next(error);
+// }}
+// );
 
 router.post('/forgot', async(req,res,next) => {
   try {
@@ -83,7 +84,7 @@ router.post('/register', async (req, res, next) => {
     // console.log(err.errmsg);
     next(err );
   }
-});
+}); 
 
 // POST /authenticate
 router.post('/', async (req, res, next) => {

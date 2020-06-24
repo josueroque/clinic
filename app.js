@@ -47,6 +47,7 @@ require('./models/Patient');
 //Api routes
 app.use('/apiv1/patients', require('./routes/apiv1/patients'));
 app.use('/apiv1/history', require('./routes/apiv1/history'));
+app.use('/apiv1/authenticate', require('./routes/apiv1/authenticate'));
 
 //Middlewares
 if (process.env.LOG_FORMAT !== 'nolog') {
@@ -67,6 +68,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-module.exports = app;
+}); 
+ 
+module.exports = app; 
+  

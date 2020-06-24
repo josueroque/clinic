@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 var hash = require('hash.js');
 
-const nodemailerTransport = require('../lib/nodemailerConfigure');
+//const nodemailerTransport = require('../lib/nodemailerConfigure');
 const userSchema = mongoose.Schema({
   name:String,
   email: { type: String, unique: true },
@@ -18,14 +18,14 @@ userSchema.statics.hashPassword = function (plain) {
   return hash.sha256().update(plain).digest('hex');
 };
 
-userSchema.methods.sendEmail=function(from,subject,body){
- return nodemailerTransport.sendMail({
-    from:from,
-    to:this.email,
-    subject:subject,
-    html:body
-  });
-};
+// userSchema.methods.sendEmail=function(from,subject,body){
+//  //return nodemailerTransport.sendMail({
+//     from:from,
+//     to:this.email,
+//     subject:subject,
+//     html:body
+//   });
+//};
 
 const User = mongoose.model('User', userSchema);
 
