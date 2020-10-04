@@ -48,6 +48,7 @@ router.put('/:id', async (req, res, next) => {
     console.log(req.body);
     //const history = new History(data);
     const historyUpdated = await History.findOneAndUpdate({_id: _id}, data, { new: true }).exec();
+    console.log("new version");
     res.json({ success: true ,idRecibido:req.params.id,result: historyUpdated });
 
   } catch (err) {
