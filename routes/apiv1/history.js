@@ -8,7 +8,7 @@ router.get('/:id',async (req, res, next) => {
 
   try {
 
-    const id=req.query.id;
+    const id=req.params.id;
     const fields = req.query.fields;
     let sort = req.query.sort;
 
@@ -20,7 +20,6 @@ router.get('/:id',async (req, res, next) => {
 
     let filter = {};
     
-
   
     if (id){
       filter._id=id;    
