@@ -30,7 +30,7 @@ router.get('/:id',async (req, res, next) => {
     const history = await History.list({ filter: filter  });
     console.log(history);
 
-    res.json({ success: true, results: history });
+    res.json({ success: true,,idRecibido:req.params.id, results: history });
 
 
   } catch (err) {
@@ -49,7 +49,7 @@ router.put('/:id', async (req, res, next) => {
     //const history = new History(data);
     const historyUpdated = await History.findOneAndUpdate({_id: _id}, data, { new: true }).exec();
     console.log("new version");
-    res.json({ success: true ,idRecibido:req.params.id,result: historyUpdated });
+    res.json({ success: true ,result: historyUpdated });
 
   } catch (err) {
     console.log(err);
