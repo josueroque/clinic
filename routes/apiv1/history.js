@@ -30,7 +30,7 @@ router.get('/:id',async (req, res, next) => {
     const history = await History.list({ filter: filter  });
     
 
-    res.json({ success: true,req_query:req.query, results: history });
+    res.json({ success: true,req_query:req.query,params:req.params, results: history });
 
 
   } catch (err) {
