@@ -32,7 +32,7 @@ const historySchema = mongoose.Schema({
     deadAfterFirstWeek:Number,
     stillAlive:Number,
     previousWeight:Number,
-    twinsHistory:Number,
+    twinsHistory: Boolean,
   //Previous pregnancy
     endDate:Date,
     terminationCondition:String,

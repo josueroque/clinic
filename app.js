@@ -46,6 +46,7 @@ require('./models/Patient');
 
 //Api routes
 app.use('/apiv1/patients', require('./routes/apiv1/patients'));
+app.use('/apiv1/actualGestation', require('./routes/apiv1/actualGestation'));
 app.use('/apiv1/history', require('./routes/apiv1/history'));
 app.use('/apiv1/authenticate', require('./routes/apiv1/authenticate'));
 

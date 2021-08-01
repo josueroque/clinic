@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const History = require('../../models/History');
+const ActualGestation = require('../../models/ActualGestation');
 
 router.get('/:id',async (req, res, next) => {
 
@@ -22,18 +22,9 @@ router.get('/:id',async (req, res, next) => {
       filter._id=id;    
     }
  
-// console.log('filter:');
-// console.log(filter);
-// console.log('query');
-// console.log(req.query);
-// console.log(req);
-
-
-    const history = await History.list({ filter: filter  });
-    
-
-    res.json({ success: true,req_query:req.query,params:req.params,filter:filter, results: history });
-
+    const actualGestation = await ActualGestation.list({ filter: filter  });
+ 
+    res.json({ success: true,req_query:req.query,params:req.params,filter:filter, results: actualGestation });
 
   } catch (err) {
     console.log(err);
@@ -47,11 +38,8 @@ router.put('/:id', async (req, res, next) => {
     let data = req.body;
     const _id=req.params.id;
     data.updatedAt=Date.now();
-    console.log(req.body);
-    //const history = new History(data);
-    const historyUpdated = await History.findOneAndUpdate({_id: _id}, data, { new: true }).exec();
-    console.log("new version");
-    res.json({ success: true ,result: historyUpdated });
+    const actualGestationUpdated = await ActualGestation.find.OneAndUpdate({_id: _id}, data, { new: true }).exec();
+    res.json({ success: true ,result: actualGestationUpdated });
 
   } catch (err) {
     console.log(err);
@@ -62,11 +50,12 @@ router.put('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let data = req.body;
-    console.log(data);
     data.createdAt=Date.now();
-    const history = new History(data);
-    const historySaved = await history.save();
-    res.json({ success: true, result: historySaved });
+    const actualGestation = new ActualGestation(data);
+    console.log(veamos);
+    console.log(data);
+    const actualGestationSaved = await actualGestation.save();
+    res.json({ success: true, result: actualGestationSaved });
 
   } catch (err) {
     console.log(err);
@@ -78,11 +67,8 @@ router.delete('/:id', async (req, res, next) => {
   try {
 
     const _id = req.params.id;
-   //await advert.setPhoto(req.files) ;
-    await Advert.deleteOne({ _id: _id}).exec();
-    await User.updateMany( {}, { $pullAll: {favorites: [_id] } });
-
-    res.json({ success: true, result: 'item deleted!' });
+    await ActualGestion.deleteOne({ _id: _id}).exec();
+    res.json({ success: true, result: 'gestation deleted!' });
 
   } catch (err) {
     console.log(err); 
