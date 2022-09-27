@@ -7,13 +7,13 @@ const actualGestationSchema = mongoose.Schema({
   dateGestation: Date,
   lastMenstruationDate: Date,
   previousWeight: Number,
-  size: Boolean,
+  size: Number,
   antitetanicCurrent: Boolean,
-  antitetanicDose1: Boolean,
-  antitetanicDose2: Boolean,
-  visualInspection: Boolean,
+  antitetanicDose1: Number,
+  antitetanicDose2: Number,
+  visualInspection: String,
   papaNicolao: Boolean,
-  colposcopy: Boolean,
+  colposcopy: String,
   dental: Boolean,
   mammary: Boolean,
   group: String,
@@ -51,13 +51,6 @@ const actualGestationSchema = mongoose.Schema({
 
 actualGestationSchema.statics.list = function ({ filter }) {
   console.log("desde moddelo ");
-  console.log(filter);
-  const query = ActualGestation.find(filter);
-  return query.exec();
-};
-
-actualGestationSchema.statics.list = function ({ filter }) {
-  console.log("desde model filter");
   console.log(filter);
   const query = ActualGestation.find(filter);
   return query.exec();

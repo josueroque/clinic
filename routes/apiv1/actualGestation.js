@@ -49,9 +49,11 @@ router.put("/:id", async (req, res, next) => {
     let data = req.body;
     const _id = req.params.id;
     data.updatedAt = Date.now();
-    const actualGestationUpdated = await ActualGestation.find
-      .OneAndUpdate({ _id: _id }, data, { new: true })
-      .exec();
+    const actualGestationUpdated = await ActualGestation.findOneAndUpdate(
+      { _id: _id },
+      data,
+      { new: true }
+    ).exec();
     res.json({ success: true, result: actualGestationUpdated });
   } catch (err) {
     console.log(err);
@@ -64,7 +66,6 @@ router.post("/", async (req, res, next) => {
     let data = req.body;
     data.createdAt = Date.now();
     const actualGestation = new ActualGestation(data);
-    console.log(veamos);
     console.log(data);
     const actualGestationSaved = await actualGestation.save();
     res.json({ success: true, result: actualGestationSaved });
