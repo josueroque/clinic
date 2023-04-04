@@ -12,7 +12,7 @@ const actualGestationSchema = mongoose.Schema({
   antitetanicDose1: Number,
   antitetanicDose2: Number,
   visualInspection: String,
-  papaNicolao: Boolean,
+  papanicolao: String,
   colposcopy: String,
   dental: Boolean,
   mammary: Boolean,
