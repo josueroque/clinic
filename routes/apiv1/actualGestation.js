@@ -4,24 +4,22 @@ const express = require("express");
 const router = express.Router();
 const ActualGestation = require("../../models/ActualGestation");
 
-router.get("/", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const fields = req.query.fields;
     let sort = req.query.sort;
-
     const start = req.query.start;
 
     let skip;
 
-    let filter = {};
+    const filter = {};
 
     if (id) {
-      filter._id = id;
+      filter.idNumber = id;
+    } else {
+      throw new Error("You must provide an id");
     }
-
-    console.log(" desde endpoint filter ");
-    console.log(filter);
 
     const actualGestation = await ActualGestation.list({ filter: filter });
 

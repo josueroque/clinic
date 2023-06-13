@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const actualGestationSchema = mongoose.Schema({
   idNumber: { type: String, required: true, unique: false },
   dateGestation: Date,
+  likelyDeliveryDate: Date,
   lastMenstruationDate: Date,
   previousWeight: Number,
   size: Number,
@@ -50,8 +51,6 @@ const actualGestationSchema = mongoose.Schema({
 });
 
 actualGestationSchema.statics.list = function ({ filter }) {
-  console.log("desde moddelo ");
-  console.log(filter);
   const query = ActualGestation.find(filter);
   return query.exec();
 };
